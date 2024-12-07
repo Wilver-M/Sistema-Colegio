@@ -2,6 +2,8 @@ CREATE DATABASE Sistema_Colegio
 
 USE Sistema_Colegio
 
+-- Tabla para almacenar la información de los estudiantes
+
 CREATE TABLE Estudiante (
 EstudianteID INTEGER PRIMARY KEY,
 DNI NUMERIC(8),
@@ -10,9 +12,9 @@ Apellido VARCHAR(50),
 FechaNacimiento DATE,
 DireccionPadres VARCHAR(100),
 CodigoEstudiante VARCHAR(20),
-A�oIngreso INTEGER,
+AñoIngreso INTEGER,
 PromedioGeneral DECIMAL(4,2),
-GradoID INTEGER,
+GradoID INTEGER
 );
 
 CREATE TABLE Grado(GradoID INTEGER PRIMARY KEY,
@@ -27,10 +29,10 @@ ADD CONSTRAINT fk_grado
 FOREIGN KEY (GradoID)
 REFERENCES Grado(GradoID);
 
-CREATE TABLE Profesor(ProfesorID INTEGER PRiMARY KEY,
+CREATE TABLE Profesor(ProfesorID INTEGER PRIMARY KEY,
 Nombre NVARCHAR(50),
 Apellido NVARCHAR(50),
-DNI NUMERIC(8),
+DNI CHAR(8),
 FechaNacimiento DATE,
 Direccion NVARCHAR(100),
 Especialidad NVARCHAR(50),
@@ -59,7 +61,7 @@ AsignaturaID INTEGER
 FOREIGN KEY (AsignaturaID) REFERENCES Asignatura(AsignaturaID),
 EstudianteID INTEGER
 FOREIGN KEY (EstudianteID) REFERENCES Estudiante(EstudianteID),
-FechaInscripcion INTEGER,
+FechaInscripcion DATE
 );
 
 CREATE TABLE Ambiente(AmbienteID INTEGER PRIMARY KEY,
@@ -71,9 +73,10 @@ Estado NVARCHAR(20)
 );
 
 CREATE TABLE AsignaturaAmbiente(
-AsignaturaID INTEGER
-FOREIGN KEY (AsignaturaID) REFERENCES Asignatura(AsignaturaID),
-AmbienteID INTEGER
-FOREIGN KEY (AmbienteID) REFERENCES Ambiente(AmbienteID),
-Horario NVARCHAR(50),
+  AsignaturaID INTEGER,
+  AmbienteID INTEGER,
+  Horario NVARCHAR(50),
+  PRIMARY KEY (AsignaturaID, AmbienteID),
+  FOREIGN KEY (AsignaturaID) REFERENCES Asignatura(AsignaturaID),
+  FOREIGN KEY (AmbienteID) REFERENCES Ambiente(AmbienteID)
 );
